@@ -1,5 +1,5 @@
-# Karaoke Browser
-An iOS browser that provides audio effects for singing/speaking at the same time.
+# Youtube Karaoke
+A chrome extension that provides audio effects for singing/speaking at the same time.
 
 # Roadmap
 ## v0.1: Shadowing Only
