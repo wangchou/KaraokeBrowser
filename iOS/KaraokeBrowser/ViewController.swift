@@ -10,7 +10,8 @@ import UIKit
 import WebKit
 
 let sakiURL = "https://www.youtube.com/watch?v=GsJA-60fxHk&list=RDGsJA-60fxHk&start_radio=1"
-
+// "https://www.youtube.com/watch?v=GsJA-60fxHk&list=RDGsJA-60fxHk&start_radio=1"
+// "http://192.168.2.196:5000"
 class ViewController: UIViewController {
 
     // https://stackoverflow.com/a/53141055/2797799
@@ -30,15 +31,19 @@ class ViewController: UIViewController {
           \(jsString)
         """
 
+
         let userScript = WKUserScript(source: source,
                                       injectionTime: .atDocumentEnd,
                                       forMainFrameOnly: true)
 
         let userContentController = WKUserContentController()
         userContentController.addUserScript(userScript)
+        userContentController.add(self, name: "logging")
+        userContentController.add(self, name: "error")
 
         let configuration = WKWebViewConfiguration()
         configuration.userContentController = userContentController
+        //configuration.allowsInlineMediaPlayback = true
 
         let webView = WKWebView(frame: .zero,
                                 configuration: configuration)
@@ -83,6 +88,13 @@ extension ViewController: WKNavigationDelegate {
         if let error = error {
             print(error)
         }
+    }
+}
+
+extension ViewController: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+            print("message: \(message.body)")
+            // and whatever other actions you want to take
     }
 }
 
